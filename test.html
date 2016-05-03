@@ -23,6 +23,15 @@ padding-left:10px;
 height:50px;
 background-color:black;
 }
+.tableMember{
+padding-left:10px;
+padding-right:10px;
+}
+th{
+text-align:left;
+padding-left:10px;
+padding-right:10px;
+}
 </style>
 </head>
 <body>
@@ -33,5 +42,34 @@ background-color:black;
    </span>
    <span id='headertext'>SAN FRANCISCO GIANTS</span>
 </div>
+<div ng-app="teamApp" ng-controller="teamController">
+<table>
+   <tr>
+      <th>Number</th>
+      <th>Name</th>
+      <th>Bats-Hits</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>DOB</th>
+      <th>Position</th>
+   </tr>
+   <tr ng-repeat="member in members">
+      <td class='tableMember'>{{ member.number }}</td>
+      <td class='tableMember'>{{ member.name }}</td>
+      <td class='tableMember'>{{ member.throwshits }}</td>
+      <td class='tableMember'>{{ member.height }}</td>
+      <td class='tableMember'>{{ member.weight }}</td>
+      <td class='tableMember'>{{ member.dob }}</td>
+      <td class='tableMember'>{{ member.position }}</td>
+   </tr>
+</table>
+</div>
+<script>
+var app = angular.module('teamApp',[]);
+app.controller('teamController',function($scope, $http){
+   $http.get("http://192.168.1.237/angular/mygiants/getplayers.php?position=A")
+   .then(function(response){$scope.members = response.data.players;});
+});
+</script>
 </body>
 </html>
