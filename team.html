@@ -27,10 +27,19 @@ background-color:black;
 padding-left:10px;
 padding-right:10px;
 }
+
 th{
 text-align:left;
 padding-left:10px;
 padding-right:10px;
+}
+
+ul#posMenu li{
+   display:inline;
+   font-size:20px;
+   color:orange;
+   background-color:black;
+   padding: 10px 20px;
 }
 </style>
 </head>
@@ -43,6 +52,15 @@ padding-right:10px;
    <span id='headertext'>SAN FRANCISCO GIANTS</span>
 </div>
 <div ng-app="teamApp" ng-controller="teamController">
+<div>
+<ul id='posMenu'>
+   <li ng-click="getPos('P')">Pitchers</button></li>
+   <li ng-click="getPos('C')">Catchers</li>
+   <li ng-click="getPos('I')">Infielders</li>
+   <li ng-click="getPos('O')">Outfielders</li>
+   <li ng-click="getPos('A')">Roster</li>
+</ul>
+</div>
 <table>
    <tr>
       <th>Number</th>
@@ -69,6 +87,10 @@ var app = angular.module('teamApp',[]);
 app.controller('teamController',function($scope, $http){
    $http.get("http://192.168.1.237/angular/mygiants/getplayers.php?position=A")
    .then(function(response){$scope.members = response.data.players;});
+   $scope.getPos = function(Pos){
+      $http.get("http://192.168.1.237/angular/mygiants/getplayers.php?position=" + Pos)
+      .then(function(response){$scope.members = response.data.players;});
+      };
 });
 </script>
 </body>
